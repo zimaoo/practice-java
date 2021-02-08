@@ -1,6 +1,6 @@
 package iomodel;
 
-import sun.nio.ch.PollSelectorProvider;
+// import sun.nio.ch.PollSelectorProvider;
 
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -17,7 +17,8 @@ import java.util.Set;
  */
 public class PollTest {
     public static void main(String[] args) throws Exception {
-        Selector selector = PollSelectorProvider.provider().openSelector();
+        // Selector selector = PollSelectorProvider.provider().openSelector();
+        Selector selector = null;
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
         serverSocketChannel.bind(new InetSocketAddress(1111));
 
