@@ -67,10 +67,8 @@ public class Handler implements Runnable {
         return true;
     }
 
-    private void process() throws IOException {
-        Charset charset = Charset.forName("UTF-8");
-        CharBuffer charBuffer = charset.decode(inputByteBuffer);
-        String s = charBuffer.toString();
+    private void process() {
+        String s = new String(inputByteBuffer.array()).trim();
         System.out.println("process: " + s);
         System.out.println("输出返回信息中...");
         outputByteBuffer = ByteBuffer.wrap("nihao".getBytes());
