@@ -34,7 +34,8 @@ public class EpollTest {
             while (selectionKeyIterator.hasNext()) {
                 SelectionKey selectionkey = selectionKeyIterator.next();
                 if (selectionkey.isAcceptable()) {
-                    SocketChannel socketChannel = serverSocketChannel.accept();
+                    // SocketChannel socketChannel = serverSocketChannel.accept();
+                    SocketChannel socketChannel = ((ServerSocketChannel)(selectionkey.channel())).accept();
                     socketChannel.configureBlocking(false);
                     socketChannel.register(selector, SelectionKey.OP_READ);
                     System.out.println("建立连接：" + socketChannel.getLocalAddress() + "\n");
