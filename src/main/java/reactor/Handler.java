@@ -55,7 +55,10 @@ public class Handler implements Runnable {
     private void send() throws IOException {
         socket.write(outputByteBuffer);
         if (isOutputComplete()) {
-            selectionKey.cancel();
+            // selectionKey.cancel();
+            state = READING;
+            selectionKey.interestOps(SelectionKey.OP_READ);
+            outputByteBuffer.clear();
         }
     }
 
@@ -69,8 +72,9 @@ public class Handler implements Runnable {
 
     private void process() {
         String s = new String(inputByteBuffer.array()).trim();
+        inputByteBuffer.clear();
         System.out.println("process: " + s);
-        System.out.println("输出返回信息中...");
-        outputByteBuffer = ByteBuffer.wrap("nihao".getBytes());
+        s = s + " from s\n";
+        outputByteBuffer = ByteBuffer.wrap(s.getBytes());
     }
 }
