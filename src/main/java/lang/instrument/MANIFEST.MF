@@ -1,0 +1,4 @@
+Agent-Class: lang.instrument.Agent
+Premain-Class: lang.instrument.Agent
+Can-Redefine-Classes: true
+Can-Retransform-Classes: true

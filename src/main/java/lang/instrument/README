@@ -1,0 +1,9 @@
+https://www.cnblogs.com/LittleHann/p/4783581.html
+
+jar cvmf MANIFEST.MF agent.jar Agent.class
+
+# 静态
+cd ..
+java -javaagent:./instrument/agent.jar instrument/Test
+
+# 动态
