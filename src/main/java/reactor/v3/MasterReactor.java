@@ -1,4 +1,6 @@
-package reactor;
+package reactor.v3;
+
+import reactor.v3.Handler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -11,14 +13,18 @@ import java.util.Set;
 
 /**
  * @author zhangxinpeng
- * @date 2021/2/7
+ * @date 2021/2/8
  */
-public class Reactor implements Runnable {
-    Selector selector;
-    ServerSocketChannel serverSocket;
+public class MasterReactor implements Runnable {
+    private Selector selector;
+    private ServerSocketChannel serverSocket;
+    private SlaveReactor slaveReactor;
 
-    public Reactor(int port) throws IOException {
+    public MasterReactor(int port, SlaveReactor slaveReactor) throws IOException {
+        System.out.println("master reactor init");
+        this.slaveReactor = slaveReactor;
         selector = Selector.open();
+        System.out.println(selector.toString());
         serverSocket = ServerSocketChannel.open();
         serverSocket.socket().bind(new InetSocketAddress(port));
         serverSocket.configureBlocking(false);
@@ -29,7 +35,8 @@ public class Reactor implements Runnable {
     @Override
     public void run() {
         try {
-            while (!Thread.interrupted()) {
+            while (true) {
+                System.out.println("Master reactor running, " + Thread.currentThread().getName());
                 selector.select();
                 Set<SelectionKey> selected = selector.selectedKeys();
                 Iterator<SelectionKey> iterator = selected.iterator();
@@ -43,22 +50,24 @@ public class Reactor implements Runnable {
         }
     }
 
-    void dispatch(SelectionKey selectionKey) {
+    private void dispatch(SelectionKey selectionKey) {
         Runnable r = (Runnable) selectionKey.attachment();
         if (r != null) {
             r.run();
         }
     }
 
-    class Acceptor implements Runnable {
+    private class Acceptor implements Runnable {
         @Override
         public void run() {
             try {
                 SocketChannel c = serverSocket.accept();
                 if (c != null) {
-                    new Handler(selector, c);
+                    new Handler(slaveReactor, c);
                 }
-            } catch (IOException e) {}
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

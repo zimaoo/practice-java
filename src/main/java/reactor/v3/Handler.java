@@ -1,12 +1,9 @@
-package reactor;
+package reactor.v3;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
 import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import java.nio.charset.Charset;
 
 /**
  * @author zhangxinpeng
@@ -21,13 +18,13 @@ public class Handler implements Runnable {
     private static final int READING = 0, SENDING = 1;
     private int state = READING;
 
-    public Handler(Selector selector, SocketChannel socketChannel) throws IOException {
+    public Handler(SlaveReactor slaveReactor, SocketChannel socketChannel) throws IOException {
         this.socket = socketChannel;
         socketChannel.configureBlocking(false);
-        selectionKey = socket.register(selector, 0);
+        selectionKey = socket.register(slaveReactor.getSelector(), 0);
         selectionKey.attach(this);
         selectionKey.interestOps(SelectionKey.OP_READ);
-        selector.wakeup();
+        slaveReactor.getSelector().wakeup();
     }
 
     @Override

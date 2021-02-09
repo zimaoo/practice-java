@@ -27,6 +27,7 @@ public class EpollTest {
         serverSocketChannel.register(selector, ops, null);
 
         while (true) {
+            System.out.println("In loop");
             selector.select();
             Set<SelectionKey> selectionKeySet = selector.selectedKeys();
             Iterator<SelectionKey> selectionKeyIterator = selectionKeySet.iterator();
