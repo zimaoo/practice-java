@@ -16,6 +16,7 @@ public class SlaveReactor implements Runnable {
     public SlaveReactor() {
         try {
             System.out.println("slave reactor init");
+            // this.selector = Selector.open();
             this.selector = Selector.open();
             System.out.println(selector.toString());
         } catch (IOException e) {
@@ -30,7 +31,7 @@ public class SlaveReactor implements Runnable {
     @Override
     public void run() {
         try {
-            while (true) {
+            while (!Thread.interrupted()) {
                 System.out.println("Slave reactor running, " + Thread.currentThread().getName());
                 selector.select();
                 Set<SelectionKey> selected = selector.selectedKeys();

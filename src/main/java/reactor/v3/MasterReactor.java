@@ -35,7 +35,7 @@ public class MasterReactor implements Runnable {
     @Override
     public void run() {
         try {
-            while (true) {
+            while (!Thread.interrupted()) {
                 System.out.println("Master reactor running, " + Thread.currentThread().getName());
                 selector.select();
                 Set<SelectionKey> selected = selector.selectedKeys();
@@ -61,6 +61,7 @@ public class MasterReactor implements Runnable {
         @Override
         public void run() {
             try {
+                System.out.println("accepting...");
                 SocketChannel c = serverSocket.accept();
                 if (c != null) {
                     new Handler(slaveReactor, c);
