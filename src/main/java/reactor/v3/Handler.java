@@ -10,21 +10,32 @@ import java.nio.channels.SocketChannel;
  * @date 2021/2/7
  */
 public class Handler implements Runnable {
-    private SocketChannel socket;
-    private SelectionKey selectionKey;
+    private SocketChannel clientSocketChannel;
+    private SelectionKey clientSelectionKey;
     ByteBuffer inputByteBuffer = ByteBuffer.allocate(1024);
     ByteBuffer outputByteBuffer = ByteBuffer.allocate(1024);
 
     private static final int READING = 0, SENDING = 1;
     private int state = READING;
 
-    public Handler(SlaveReactor slaveReactor, SocketChannel socketChannel) throws IOException {
-        this.socket = socketChannel;
-        socketChannel.configureBlocking(false);
-        selectionKey = socket.register(slaveReactor.getSelector(), 0);
-        selectionKey.attach(this);
-        selectionKey.interestOps(SelectionKey.OP_READ);
-        slaveReactor.getSelector().wakeup();
+    public Handler(SocketChannel client) {
+        this.clientSocketChannel = client;
+    }
+
+    public SocketChannel getClientSocketChannel() {
+        return clientSocketChannel;
+    }
+
+    public void setClientSocketChannel(SocketChannel clientSocketChannel) {
+        this.clientSocketChannel = clientSocketChannel;
+    }
+
+    public SelectionKey getClientSelectionKey() {
+        return clientSelectionKey;
+    }
+
+    public void setClientSelectionKey(SelectionKey clientSelectionKey) {
+        this.clientSelectionKey = clientSelectionKey;
     }
 
     @Override
@@ -41,20 +52,20 @@ public class Handler implements Runnable {
     }
 
     private void read() throws IOException {
-        socket.read(inputByteBuffer);
+        clientSocketChannel.read(inputByteBuffer);
         if (isInputComplete()) {
             process();
             state = SENDING;
-            selectionKey.interestOps(SelectionKey.OP_WRITE);
+            clientSelectionKey.interestOps(SelectionKey.OP_WRITE);
         }
     }
 
     private void send() throws IOException {
-        socket.write(outputByteBuffer);
+        clientSocketChannel.write(outputByteBuffer);
         if (isOutputComplete()) {
             // selectionKey.cancel();
             state = READING;
-            selectionKey.interestOps(SelectionKey.OP_READ);
+            clientSelectionKey.interestOps(SelectionKey.OP_READ);
             outputByteBuffer.clear();
         }
     }

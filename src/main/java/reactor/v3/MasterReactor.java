@@ -64,7 +64,7 @@ public class MasterReactor implements Runnable {
                 System.out.println("accepting...");
                 SocketChannel c = serverSocket.accept();
                 if (c != null) {
-                    new Handler(slaveReactor, c);
+                    slaveReactor.registerHandler(new Handler(c));
                 }
             } catch (IOException e) {
                 e.printStackTrace();
