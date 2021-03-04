@@ -15,7 +15,6 @@ import io.netty.handler.logging.LoggingHandler;
 public class EchoClient {
     public static void main(String[] args) {
         EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
-
         try {
 
             Bootstrap bootstrap = new Bootstrap();

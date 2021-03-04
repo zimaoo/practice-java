@@ -28,7 +28,7 @@ public class EchoServer {
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline channelPipeline = ch.pipeline();
                             channelPipeline.addLast(new LoggingHandler(LogLevel.INFO));
-                            channelPipeline.addLast(new EchoClientHandler());
+                            channelPipeline.addLast(new EchoServerHandler());
                         }
                     });
 
