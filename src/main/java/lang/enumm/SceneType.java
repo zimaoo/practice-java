@@ -41,4 +41,9 @@ public enum SceneType {
     public static SceneType getById(byte id) {
         return REPOSITORY.get(id);
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(id);
+    }
 }
