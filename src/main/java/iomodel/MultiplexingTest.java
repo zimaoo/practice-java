@@ -8,6 +8,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.nio.channels.spi.SelectorProvider;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -15,10 +16,10 @@ import java.util.Set;
  * @author zhangxinpeng
  * @date 2020/11/17
  */
-public class PollTest {
+public class MultiplexingTest {
     public static void main(String[] args) throws Exception {
-        // Selector selector = PollSelectorProvider.provider().openSelector();
-        Selector selector = null;
+        Selector selector = SelectorProvider.provider().openSelector();
+        System.out.println("=> " + selector.getClass().getName());
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
         serverSocketChannel.bind(new InetSocketAddress(1111));
 
