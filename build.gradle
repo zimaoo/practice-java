@@ -39,4 +39,6 @@ dependencies {
     compile 'redis.clients:jedis:2.9.0'
     compile 'com.typesafe.akka:akka-actor-typed_2.13:2.6.13'
     testCompile 'com.typesafe.akka:akka-actor-testkit-typed_2.13:2.6.13'
+    // https://mvnrepository.com/artifact/org.openjdk.jol/jol-core
+    compileOnly group: 'org.openjdk.jol', name: 'jol-core', version: '0.14'
 }
