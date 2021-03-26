@@ -8,6 +8,15 @@ import org.openjdk.jol.info.ClassLayout;
  */
 public class JOLTest {
     public static void main(String[] args) {
-        System.out.println(ClassLayout.parseClass(JOLTest.class).toPrintable());
+        Clazz clazz = new Clazz();
+        System.out.println(ClassLayout.parseInstance(clazz).toPrintable());
+        System.out.println("===");
+        System.out.println(Integer.toHexString(clazz.hashCode()));
+        System.out.println("===");
+        System.out.println(ClassLayout.parseInstance(clazz).toPrintable());
     }
+}
+
+class Clazz {
+
 }
