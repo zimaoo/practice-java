@@ -8,6 +8,10 @@ import java.nio.channels.SelectionKey;
  */
 public class BitTest {
     public static void main(String[] args) {
+        testSelectionKey();
+    }
+
+    public static void testSelectionKey() {
         System.out.println(SelectionKey.OP_READ);
         System.out.println(SelectionKey.OP_WRITE);
         System.out.println(SelectionKey.OP_CONNECT);

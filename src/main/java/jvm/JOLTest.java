@@ -11,12 +11,13 @@ public class JOLTest {
         Clazz clazz = new Clazz();
         System.out.println(ClassLayout.parseInstance(clazz).toPrintable());
         System.out.println("===");
-        System.out.println(Integer.toHexString(clazz.hashCode()));
+        // System.out.println(Integer.toHexString(clazz.hashCode()));
+        System.gc();
         System.out.println("===");
         System.out.println(ClassLayout.parseInstance(clazz).toPrintable());
     }
 }
 
 class Clazz {
-
+//    int a = 23;
 }
