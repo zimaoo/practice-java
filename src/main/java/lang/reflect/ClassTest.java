@@ -1,8 +1,13 @@
 package lang.reflect;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Calendar;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -40,14 +45,18 @@ public class ClassTest implements Runnable {
 //        a.add("a");
 //        a.add("b");
 //        System.out.printf(JSON.toJSONString(a.subList(a.size() - 1, a.size())));
-        ClassTest classTest = new ClassTest();
-        for (Method method : ClassTest.class.getMethods()) {
-            if (method.getName() == "a") {
-                Object obj = method.invoke(classTest, "hhh");
-                System.out.println(obj instanceof CompletableFuture);
-            }
-        }
-
+//        ClassTest classTest = new ClassTest();
+//        for (Method method : ClassTest.class.getMethods()) {
+//            if (method.getName() == "a") {
+//                Object obj = method.invoke(classTest, "hhh");
+//                System.out.println(obj instanceof CompletableFuture);
+//            }
+//        }
+//        System.out.println(A.class.isAssignableFrom(B.class));
+//        System.out.println(B.class.getSuperclass() == A.class);
+        String str = "{\"deskId\":4}";
+        Map<String, Object> jsonObject = JSON.parseObject(str, new TypeReference<Map<String, Object>>(){});
+        System.out.println(jsonObject.get("deskId"));
     }
 
     public static long getTodayZeroMillis() {
