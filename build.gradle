@@ -41,4 +41,7 @@ dependencies {
     testCompile 'com.typesafe.akka:akka-actor-testkit-typed_2.13:2.6.13'
     // https://mvnrepository.com/artifact/org.openjdk.jol/jol-core
     compile group: 'org.openjdk.jol', name: 'jol-core', version: '0.14'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.10'
+    // https://mvnrepository.com/artifact/org.mybatis/mybatis
+    implementation group: 'org.mybatis', name: 'mybatis', version: '3.5.7'
 }
