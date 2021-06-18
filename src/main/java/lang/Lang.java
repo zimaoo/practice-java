@@ -18,4 +18,7 @@ public class Lang {
         }
     }
 
+    protected void a() {
+        System.out.println("A");
+    }
 }
